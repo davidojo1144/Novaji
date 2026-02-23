@@ -8,8 +8,8 @@ import { StripeProvider } from '@stripe/stripe-react-native';
 
 import { QueryProvider } from '@/src/components/providers/QueryProvider';
 import { ThemeProvider } from '@/src/components/providers/ThemeProvider';
-
 import { AuthProvider } from '@/src/components/providers/AuthProvider';
+import { toastConfig } from '@/src/components/ui/toast-config';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -29,7 +29,7 @@ export default function RootLayout() {
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="+not-found" />
             </Stack>
-            <Toast />
+            <Toast config={toastConfig} />
           </AuthProvider>
         </ThemeProvider>
       </QueryProvider>
