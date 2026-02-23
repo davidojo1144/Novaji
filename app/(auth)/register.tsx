@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form';
-import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as z from 'zod';
+import Toast from 'react-native-toast-message';
 
 import { useAuthStore } from '@/src/store/authStore';
 import api from '@/src/lib/api';
@@ -43,13 +44,20 @@ export default function RegisterScreen() {
       const { token, ...user } = response.data;
       login(user, token);
       
+      Toast.show({
+        type: 'success',
+        text1: 'Registration Successful',
+        text2: `Welcome, ${user.name}!`,
+      });
+      
       // AuthProvider will handle redirect
     } catch (error: any) {
       console.error(error);
-      Alert.alert(
-        'Registration Failed',
-        error.response?.data?.message || 'Something went wrong. Please try again.'
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Registration Failed',
+        text2: error.response?.data?.message || 'Something went wrong. Please try again.',
+      });
     }
   };
 
