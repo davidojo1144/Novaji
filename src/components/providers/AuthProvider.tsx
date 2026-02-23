@@ -9,6 +9,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigationState = useRootNavigationState();
 
   useEffect(() => {
+    /*
     if (!navigationState?.key) return;
 
     // Add a small delay or check if the root layout is fully mounted
@@ -20,12 +21,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else if (isAuthenticated && inAuthGroup) {
       router.replace('/(tabs)');
     }
+    */
   }, [isAuthenticated, segments, navigationState?.key]);
 
+  /*
   if (!navigationState?.key) {
     // Return null or a loading spinner while waiting for navigation to be ready
     return null; 
   }
+  */
 
   return <>{children}</>;
 }
