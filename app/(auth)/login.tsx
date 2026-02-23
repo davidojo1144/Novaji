@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as z from 'zod';
 
 import { useAuthStore } from '@/src/store/authStore';
+import api from '@/src/lib/api';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -27,13 +28,23 @@ export default function LoginScreen() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    // In a real app, you would validate credentials with your API
-    login({ id: '1', email: data.email, name: 'User' }, 'dummy-token');
-    
-    // AuthProvider will handle redirect
+    try {
+      const response = await api.post('/auth/login', {
+        email: data.email,
+        password: data.password,
+      });
+
+      const { token, ...user } = response.data;
+      login(user, token);
+      
+      // AuthProvider will handle redirect
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert(
+        'Login Failed',
+        error.response?.data?.message || 'Something went wrong. Please try again.'
+      );
+    }
   };
 
   return (
@@ -107,7 +118,7 @@ export default function LoginScreen() {
       </View>
 
       <View className="flex-row justify-center mt-8">
-        <Text className="text-gray-600">Don't have an account? </Text>
+        <Text className="text-gray-600">Don&apos;t have an account? </Text>
         <TouchableOpacity onPress={() => router.push('/(auth)/register')}>
           <Text className="text-blue-600 font-bold">Sign Up</Text>
         </TouchableOpacity>

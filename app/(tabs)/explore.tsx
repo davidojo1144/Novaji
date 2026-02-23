@@ -1,112 +1,100 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'expo-router';
+import { ShoppingCart, Plus } from 'lucide-react-native';
 
-import { Collapsible } from '@/src/components/ui/collapsible';
-import { ExternalLink } from '@/src/components/ui/external-link';
-import ParallaxScrollView from '@/src/components/ui/parallax-scroll-view';
-import { ThemedText } from '@/src/components/ui/themed-text';
-import { ThemedView } from '@/src/components/ui/themed-view';
-import { IconSymbol } from '@/src/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+import api from '@/src/lib/api';
+import { useCartStore } from '@/src/store/cartStore';
+import { Product } from '@/src/types';
 
-export default function TabTwoScreen() {
+export default function ProductListScreen() {
+  const router = useRouter();
+  const addItem = useCartStore((state) => state.addItem);
+  const cartItems = useCartStore((state) => state.items);
+
+  const { data: products, isLoading, error } = useQuery<Product[]>({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const response = await api.get('/products');
+      return response.data;
+    },
+  });
+
+  const renderItem = ({ item }: { item: Product }) => (
+    <View className="bg-white p-4 rounded-xl shadow-sm mb-4 mx-4">
+      <Image 
+        source={{ uri: item.image }} 
+        className="w-full h-48 rounded-lg mb-4"
+        resizeMode="cover"
+      />
+      <View>
+        <Text className="text-lg font-bold text-gray-900">{item.name}</Text>
+        <Text className="text-gray-500 text-sm mt-1" numberOfLines={2}>
+          {item.description}
+        </Text>
+        <View className="flex-row justify-between items-center mt-4">
+          <Text className="text-xl font-bold text-blue-600">${item.price}</Text>
+          <TouchableOpacity
+            onPress={() => addItem(item)}
+            className="bg-blue-600 p-2 rounded-full"
+          >
+            <Plus size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#2563EB" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View className="flex-1 justify-center items-center p-6">
+        <Text className="text-red-500 text-lg text-center mb-4">
+          Failed to load products. Please check your connection.
+        </Text>
+        <TouchableOpacity 
+          onPress={() => router.replace('/(tabs)/explore')}
+          className="bg-blue-600 px-6 py-3 rounded-lg"
+        >
+          <Text className="text-white font-bold">Retry</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <SafeAreaView className="flex-1 bg-gray-50">
+      <View className="flex-row justify-between items-center p-4 bg-white shadow-sm mb-2">
+        <Text className="text-2xl font-bold text-gray-900">Products</Text>
+        <TouchableOpacity 
+          onPress={() => router.push('/cart')}
+          className="relative p-2"
+        >
+          <ShoppingCart size={24} color="#11181C" />
+          {cartItems.length > 0 && (
+            <View className="absolute top-0 right-0 bg-red-500 w-5 h-5 rounded-full justify-center items-center">
+              <Text className="text-white text-xs font-bold">
+                {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});

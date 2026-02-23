@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as z from 'zod';
 
 import { useAuthStore } from '@/src/store/authStore';
+import api from '@/src/lib/api';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -32,13 +33,24 @@ export default function RegisterScreen() {
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    // In a real app, you would create an account and get a token
-    login({ id: '2', email: data.email, name: data.name }, 'dummy-token');
-    
-    // AuthProvider will handle redirect
+    try {
+      const response = await api.post('/auth/register', {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
+
+      const { token, ...user } = response.data;
+      login(user, token);
+      
+      // AuthProvider will handle redirect
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert(
+        'Registration Failed',
+        error.response?.data?.message || 'Something went wrong. Please try again.'
+      );
+    }
   };
 
   return (

@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import Toast from 'react-native-toast-message';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 import { QueryProvider } from '@/src/components/providers/QueryProvider';
 import { ThemeProvider } from '@/src/components/providers/ThemeProvider';
@@ -19,17 +20,19 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <QueryProvider>
-      <ThemeProvider>
-        <AuthProvider>
-          <Stack>
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <Toast />
-        </AuthProvider>
-      </ThemeProvider>
-    </QueryProvider>
+    <StripeProvider publishableKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+      <QueryProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <Stack>
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <Toast />
+          </AuthProvider>
+        </ThemeProvider>
+      </QueryProvider>
+    </StripeProvider>
   );
 }
