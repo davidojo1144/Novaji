@@ -9,6 +9,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigationState = useRootNavigationState();
 
   useEffect(() => {
+    // NOTE: Authentication flow is temporarily disabled to prevent navigation race conditions
+    // until you are ready to integrate authentication fully.
+    
+    /*
     if (!navigationState?.key) return;
 
     const inAuthGroup = segments[0] === '(auth)';
@@ -18,6 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else if (isAuthenticated && inAuthGroup) {
       router.replace('/(tabs)');
     }
+    */
   }, [isAuthenticated, segments, navigationState?.key]);
 
   return <>{children}</>;
