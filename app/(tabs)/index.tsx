@@ -20,7 +20,7 @@ export default function HomeScreen() {
         <View className="flex-row justify-between items-center py-4">
           <View>
             <Text className="text-gray-500 text-sm">Welcome back,</Text>
-            <Text className="text-2xl font-bold text-gray-900">{user?.name || 'User'}</Text>
+            <Text className="text-2xl font-bold text-gray-900">{user?.name || 'Guest'}</Text>
           </View>
           <View className="flex-row gap-4">
             <TouchableOpacity className="p-2 bg-white rounded-full shadow-sm">
