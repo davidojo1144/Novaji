@@ -6,17 +6,14 @@ import { Home, Settings, User } from 'lucide-react-native';
 import { HapticTab } from '@/src/components/ui/haptic-tab';
 import { IconSymbol } from '@/src/components/ui/icon-symbol';
 import TabBarBackground from '@/src/components/ui/tab-bar-background';
-import { useColorScheme } from '@/src/hooks/use-color-scheme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colorScheme === 'dark' ? '#fff' : '#000',
-        tabBarInactiveTintColor: colorScheme === 'dark' ? '#888' : '#888',
+        tabBarActiveTintColor: '#000',
+        tabBarInactiveTintColor: '#888',
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect

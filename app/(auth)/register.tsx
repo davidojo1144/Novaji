@@ -42,23 +42,23 @@ export default function RegisterScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-black justify-center px-6">
+    <SafeAreaView className="flex-1 bg-white justify-center px-6">
       <View className="mb-8">
-        <Text className="text-3xl font-bold text-gray-900 dark:text-white">Create Account</Text>
-        <Text className="text-gray-500 dark:text-gray-400 mt-2">Sign up to get started</Text>
+        <Text className="text-3xl font-bold text-gray-900">Create Account</Text>
+        <Text className="text-gray-500 mt-2">Sign up to get started</Text>
       </View>
 
       <View className="space-y-4">
         <View>
-          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</Text>
+          <Text className="text-sm font-medium text-gray-700 mb-1">Name</Text>
           <Controller
             control={control}
             name="name"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 className={`w-full px-4 py-3 rounded-lg border ${
-                  errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
-                } bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white`}
+                  errors.name ? 'border-red-500' : 'border-gray-300'
+                } bg-gray-50 text-gray-900`}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -73,15 +73,15 @@ export default function RegisterScreen() {
         </View>
 
         <View>
-          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</Text>
+          <Text className="text-sm font-medium text-gray-700 mb-1">Email</Text>
           <Controller
             control={control}
             name="email"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 className={`w-full px-4 py-3 rounded-lg border ${
-                  errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
-                } bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white`}
+                  errors.email ? 'border-red-500' : 'border-gray-300'
+                } bg-gray-50 text-gray-900`}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -98,15 +98,15 @@ export default function RegisterScreen() {
         </View>
 
         <View>
-          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</Text>
+          <Text className="text-sm font-medium text-gray-700 mb-1">Password</Text>
           <Controller
             control={control}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 className={`w-full px-4 py-3 rounded-lg border ${
-                  errors.password ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
-                } bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white`}
+                  errors.password ? 'border-red-500' : 'border-gray-300'
+                } bg-gray-50 text-gray-900`}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -122,15 +122,15 @@ export default function RegisterScreen() {
         </View>
 
         <View>
-          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</Text>
+          <Text className="text-sm font-medium text-gray-700 mb-1">Confirm Password</Text>
           <Controller
             control={control}
             name="confirmPassword"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 className={`w-full px-4 py-3 rounded-lg border ${
-                  errors.confirmPassword ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
-                } bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white`}
+                  errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                } bg-gray-50 text-gray-900`}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -159,7 +159,7 @@ export default function RegisterScreen() {
       </View>
 
       <View className="flex-row justify-center mt-8">
-        <Text className="text-gray-600 dark:text-gray-400">Already have an account? </Text>
+        <Text className="text-gray-600">Already have an account? </Text>
         <TouchableOpacity onPress={() => router.push('/(auth)/login')}>
           <Text className="text-blue-600 font-bold">Sign In</Text>
         </TouchableOpacity>

@@ -14,20 +14,20 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-black">
+    <SafeAreaView className="flex-1 bg-gray-50">
       <ScrollView className="flex-1 px-4">
         {/* Header */}
         <View className="flex-row justify-between items-center py-4">
           <View>
-            <Text className="text-gray-500 dark:text-gray-400 text-sm">Welcome back,</Text>
-            <Text className="text-2xl font-bold text-gray-900 dark:text-white">{user?.name || 'User'}</Text>
+            <Text className="text-gray-500 text-sm">Welcome back,</Text>
+            <Text className="text-2xl font-bold text-gray-900">{user?.name || 'User'}</Text>
           </View>
           <View className="flex-row gap-4">
-            <TouchableOpacity className="p-2 bg-white dark:bg-gray-800 rounded-full shadow-sm">
-              <Search size={24} className="text-gray-700 dark:text-gray-300" />
+            <TouchableOpacity className="p-2 bg-white rounded-full shadow-sm">
+              <Search size={24} className="text-gray-700" />
             </TouchableOpacity>
-            <TouchableOpacity className="p-2 bg-white dark:bg-gray-800 rounded-full shadow-sm">
-              <Bell size={24} className="text-gray-700 dark:text-gray-300" />
+            <TouchableOpacity className="p-2 bg-white rounded-full shadow-sm">
+              <Bell size={24} className="text-gray-700" />
             </TouchableOpacity>
           </View>
         </View>
@@ -43,15 +43,15 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <View className="mt-8">
-          <Text className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</Text>
+          <Text className="text-lg font-bold text-gray-900 mb-4">Quick Actions</Text>
           <View className="flex-row flex-wrap justify-between gap-y-4">
             {[1, 2, 3, 4].map((item) => (
-              <TouchableOpacity key={item} className="w-[48%] bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-                <View className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full items-center justify-center mb-2">
-                  <User size={20} className="text-blue-600 dark:text-blue-400" />
+              <TouchableOpacity key={item} className="w-[48%] bg-white p-4 rounded-xl shadow-sm">
+                <View className="w-10 h-10 bg-blue-100 rounded-full items-center justify-center mb-2">
+                  <User size={20} className="text-blue-600" />
                 </View>
-                <Text className="font-bold text-gray-900 dark:text-white">Action {item}</Text>
-                <Text className="text-xs text-gray-500 dark:text-gray-400 mt-1">Description goes here</Text>
+                <Text className="font-bold text-gray-900">Action {item}</Text>
+                <Text className="text-xs text-gray-500 mt-1">Description goes here</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -60,10 +60,10 @@ export default function HomeScreen() {
         {/* Logout Button (Temporary for demo) */}
         <TouchableOpacity 
           onPress={handleLogout}
-          className="flex-row items-center justify-center bg-red-50 dark:bg-red-900/20 p-4 rounded-xl mt-8 mb-8 border border-red-100 dark:border-red-900"
+          className="flex-row items-center justify-center bg-red-50 p-4 rounded-xl mt-8 mb-8 border border-red-100"
         >
-          <LogOut size={20} className="text-red-600 dark:text-red-400 mr-2" />
-          <Text className="text-red-600 dark:text-red-400 font-bold">Log Out</Text>
+          <LogOut size={20} className="text-red-600 mr-2" />
+          <Text className="text-red-600 font-bold">Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
