@@ -143,6 +143,3 @@ Novaji/
 - **Enhanced UI**: Upgraded Home and Profile screens with modern design elements.
 - **Stripe Integration**: Fixed payment intent creation and 500 errors by updating API keys.
 - **Bug Fixes**: Resolved navigation race conditions in `AuthProvider` and port conflicts on macOS.
-
----
-Built with ❤️ by Novaji Team
