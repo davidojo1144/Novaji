@@ -92,6 +92,7 @@ A modern, full-stack React Native e-commerce and fintech dashboard application b
    ```env
    EXPO_PUBLIC_API_URL=http://localhost:8000/api
    ```
+   *Note: If testing on a physical device, replace `localhost` with your computer's local IP address (e.g., `http://192.168.0.175:8000/api`).*
 
 ### Running the App
 
