@@ -10,8 +10,15 @@ router.post('/create-payment-intent', protect, async (req, res) => {
   try {
     const { amount, currency = 'usd' } = req.body;
 
+    // Validate amount
+    if (!amount) {
+      return res.status(400).json({ message: 'Amount is required' });
+    }
+
+    const amountInCents = Math.round(Number(amount) * 100);
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amount * 100), // Stripe expects amount in cents
+      amount: amountInCents, // Stripe expects amount in cents
       currency,
       automatic_payment_methods: {
         enabled: true,

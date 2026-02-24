@@ -15,9 +15,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (!isAuthenticated && !inAuthGroup) {
       // Redirect to register screen by default for new users
-      router.replace('/(auth)/register');
+      const timer = setTimeout(() => {
+        router.replace('/(auth)/register');
+      }, 0);
+      return () => clearTimeout(timer);
     } else if (isAuthenticated && inAuthGroup) {
-      router.replace('/(tabs)');
+      const timer = setTimeout(() => {
+        router.replace('/(tabs)');
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [isAuthenticated, segments, navigationState?.key]);
 

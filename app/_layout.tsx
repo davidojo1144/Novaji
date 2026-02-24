@@ -2,6 +2,7 @@ import '../src/styles/global.css';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { LogBox } from 'react-native';
 import 'react-native-reanimated';
 import Toast from 'react-native-toast-message';
 import { StripeProvider } from '@stripe/stripe-react-native';
@@ -13,6 +14,11 @@ import { toastConfig } from '@/src/components/ui/toast-config';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+// Suppress deprecated warnings from dependencies
+LogBox.ignoreLogs([
+  'SafeAreaView has been deprecated',
+]);
 
 export default function RootLayout() {
   useEffect(() => {
